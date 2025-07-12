@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cardImage.dataset.originalSrc = originalSrc; // 元のsrcを保存
 
                     card.addEventListener('mouseenter', () => {
-                        cardImage.src = 'img/test.png';
+                        cardImage.src = 'img/logo/clusterlogo_1line_trans_color.svg';
                     });
 
                     card.addEventListener('mouseleave', () => {
