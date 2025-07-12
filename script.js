@@ -35,6 +35,7 @@ showRestTime();
 window.countdownInterval = setInterval(showRestTime, 1000);
 
 document.addEventListener('DOMContentLoaded', () => {
+    let touchedCard = null; // タッチされたカードを追跡
     const modalOpenBtns = document.querySelectorAll('.modal-open-btn');
     const modalOverlay = document.getElementById('modal-overlay');
     const modalCloseBtn = document.querySelector('.modal-close-btn');
@@ -52,15 +53,73 @@ document.addEventListener('DOMContentLoaded', () => {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setTheme);
 
     cards.forEach(card => {
-        const randomColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+        const randomColor = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`; // 6桁になるように0埋め
         card.style.setProperty('--neon-color', randomColor);
 
-        card.addEventListener('touchstart', function() {
-            this.classList.add('is-touched');
-        });
+        // 色の明るさを判定し、文字色を調整
+        const hexToRgb = (hex) => {
+            const r = parseInt(hex.substring(1, 3), 16);
+            const g = parseInt(hex.substring(3, 5), 16);
+            const b = parseInt(hex.substring(5, 7), 16);
+            return { r, g, b };
+        };
 
-        card.addEventListener('touchend', function() {
-            this.classList.remove('is-touched');
+        const isLightColor = (hexColor) => {
+            const { r, g, b } = hexToRgb(hexColor);
+            // 輝度を計算 (ITU-R BT.709)
+            const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+            return luminance > 0.5; // 閾値は調整可能
+        };
+
+        let isProductCardAndLight = false; // Flag to check if it's a product card and light color
+
+        if (isLightColor(randomColor)) {
+            card.classList.add('light-neon-bg');
+
+            // 販売物のカードにのみ画像変更のロジックを適用
+            if (card.dataset.productCard !== undefined) {
+                isProductCardAndLight = true;
+                const cardImage = card.querySelector('img');
+                if (cardImage) {
+                    const originalSrc = cardImage.src;
+                    cardImage.dataset.originalSrc = originalSrc; // 元のsrcを保存
+
+                    card.addEventListener('mouseenter', () => {
+                        cardImage.src = 'img/test.png';
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        cardImage.src = cardImage.dataset.originalSrc;
+                    });
+                }
+            }
+        }
+
+        // タッチイベントの処理
+        card.addEventListener('touchstart', function(event) {
+            event.stopPropagation(); // ドキュメントへの伝播を停止
+
+            // 他のカードがタッチ状態ならリセット
+            if (touchedCard && touchedCard !== this) {
+                touchedCard.classList.remove('is-touched');
+                if (touchedCard.isProductCardAndLight) {
+                    const img = touchedCard.querySelector('img');
+                    if (img && img.dataset.originalSrc) {
+                        img.src = img.dataset.originalSrc;
+                    }
+                }
+            }
+
+            this.classList.add('is-touched');
+            this.isProductCardAndLight = isProductCardAndLight; // 判定結果を要素に保存
+
+            if (isProductCardAndLight) {
+                const cardImage = this.querySelector('img');
+                if (cardImage) {
+                    cardImage.src = 'img/logo/clusterlogo_1line_trans_color.svg';
+                }
+            }
+            touchedCard = this;
         });
     });
 
@@ -178,6 +237,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fadeInSections.forEach(section => {
         observer.observe(section);
+    });
+
+    // カード以外の場所をタッチしたら、カードのタッチ状態をリセット
+    document.addEventListener('touchstart', (e) => {
+        if (touchedCard && !touchedCard.contains(e.target)) {
+            touchedCard.classList.remove('is-touched');
+            if (touchedCard.isProductCardAndLight) {
+                const img = touchedCard.querySelector('img');
+                if (img && img.dataset.originalSrc) {
+                    img.src = img.dataset.originalSrc;
+                }
+            }
+            touchedCard = null;
+        }
     });
 });
 
