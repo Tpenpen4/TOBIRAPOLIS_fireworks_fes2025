@@ -104,7 +104,7 @@ main {
     z-index: 4;
     background-color: rgb(18 29 68 / 0.5);
     background-size: contain;
-    padding: 10px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
 }
@@ -239,7 +239,7 @@ main {
 }
 
 #cards {
-    padding: 40px 0;
+    padding: 40px 20px;
     width: 100%;
 }
 
@@ -467,7 +467,7 @@ footer .footer-top {
 }
 
 footer .footer-top .credit {
-    width: 70%;
+    width: 60%;
 }
 
 footer h5 {
@@ -499,7 +499,7 @@ footer .footer-top .right-logo {
 }
 
 footer .footer-top .right-logo img {
-    width: 50%;
+    width: 42.5%;
     height: 100%;
     object-fit: contain;
 }
