@@ -1,7 +1,7 @@
 function showRestTime() {
   const now = new Date();
-  const goal = new Date('2025-07-17T19:00:00'); // イベント開催日時
-  const startDate = new Date('2025-07-01T00:00:00'); // プログレスバーの開始日時 (本日)
+  const goal = new Date('2025-08-10T15:00:00'); // イベント開催日時
+  const startDate = new Date('2025-08-17T19:30:00'); // プログレスバーの開始日時 (本日)
 
   const countdownTimeDisplay = document.getElementById('countdown-time-display');
   const progressBar = document.getElementById('progress-bar');
