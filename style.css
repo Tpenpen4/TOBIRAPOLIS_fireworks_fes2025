@@ -207,7 +207,7 @@ main {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     #day,#hour,#minute,#second {
         font-size: 1rem; /* さらに小さく */
     }
@@ -540,7 +540,7 @@ p.copy-right {
     font-family: sans-serif;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
     footer {
         width: 100%;
         padding: 5%;
