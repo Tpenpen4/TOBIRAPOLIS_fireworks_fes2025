@@ -3,8 +3,10 @@
   src: url('font/katyoufugetsu.ttf') format('truetype');
 }
 
-html {
+html,
+body {
   overflow-x: hidden;
+  width: 100%;
 }
 
 body { 
@@ -495,7 +497,6 @@ footer .footer-top .right-logo {
     flex-direction: row;
     width: 40%;
     gap: 15%;
-    padding-right: 5%;
 }
 
 footer .footer-top .right-logo img {
