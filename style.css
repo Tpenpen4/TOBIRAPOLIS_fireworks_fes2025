@@ -523,7 +523,6 @@ footer .footer-logo {
 footer .footer-logo a {
     display: block;
     width: 10%;
-    aspect-ratio: 1 / 1;
 }
 
 footer .footer-logo img {
@@ -580,4 +579,19 @@ p.copy-right {
 .card.light-neon-bg:hover,
 .card.light-neon-bg.is-touched {
     color: #000;
+}
+
+/*固定ボタン*/
+.bodycopy_01 {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+.wrap .btnWrap {
+  padding: 2em;
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+}
+.wrap .btnWrap .btn_01 a {
+  margin-top: 0;
 }
