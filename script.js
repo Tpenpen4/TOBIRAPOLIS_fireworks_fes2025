@@ -30,11 +30,37 @@ function showRestTime() {
   progressBar.style.width = `${progressPercentage}%`;
 }
 
-// 初回呼び出しとインターバルの設定
-showRestTime();
-window.countdownInterval = setInterval(showRestTime, 1000);
 
-document.addEventListener('DOMContentLoaded', () => {
+
+function setupAccordion() {
+  document.querySelectorAll('.panel-header').forEach(trigger => {
+    trigger.addEventListener('click', function() {
+      const content = this.nextElementSibling;
+      const panel = this.closest('.panel');
+
+      // 他のパネルを閉じる
+      document.querySelectorAll('.panel-header').forEach(otherTrigger => {
+        if (otherTrigger !== this) {
+          otherTrigger.classList.remove('active');
+          const otherContent = otherTrigger.nextElementSibling;
+          otherContent.style.height = '0';
+        }
+      });
+
+      // クリックしたパネルの処理
+      this.classList.toggle('active');
+
+      if (this.classList.contains('active')) {
+        // 開く時は中身の高さを計算
+        const body = content.querySelector('.panel-body');
+        content.style.height = body.offsetHeight + 'px';
+      } else {
+        // 閉じる時は0
+        content.style.height = '0';
+      }
+    });
+  });
+}
     let touchedCard = null; // タッチされたカードを追跡
     const modalOpenBtns = document.querySelectorAll('.modal-open-btn');
     const modalOverlay = document.getElementById('modal-overlay');
@@ -182,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(() => {
               modalOverlay.classList.add('active');
               document.querySelector('.modal-content').classList.add('active');
+              setupAccordion(); // ここでアコーディオンのセットアップ関数を呼び出す
             });
           })
           .catch(error => {
@@ -263,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         observer.observe(mainTopSection);
     }
-});
 
     
 
@@ -305,3 +331,8 @@ window.addEventListener('load', () => {
         }
     }
 });
+
+// Initial call to display the countdown immediately
+showRestTime();
+// Update the countdown every second
+setInterval(showRestTime, 1000);

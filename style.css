@@ -1,3 +1,52 @@
+.faq-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.panel {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.panel-header {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.panel-header:hover {
+  background: #f8f9fa;
+}
+
+.icon {
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.panel-header.active .icon {
+  transform: rotate(45deg);
+}
+
+.panel-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
 @font-face {
   font-family: 'katyoufugetsu';
   src: url('font/katyoufugetsu.ttf') format('truetype');
@@ -13,11 +62,12 @@ body {
   position: relative;
   background-color:#212121;
   color: #fff;
-  font-family: 'katyoufugetsu', sans-serif;
+
 }
 * {
     margin: 0;
     box-sizing: border-box;
+    font-family: 'katyoufugetsu', sans-serif;
 }
 img{
     pointer-events: none;
@@ -570,7 +620,7 @@ p.copy-right {
 }
 
 .precautions-modal {
-  font-family: sans-serif;
+  font-family: sans-serif !important;
 }
 
 
