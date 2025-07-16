@@ -126,7 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // オーディオスペクトラムのバーを生成する関数
     const createSpectrumBars = (container) => {
         container.innerHTML = ''; // 既存のバーをクリア
-        const barCount = 20; // バーの数
+        let barCount;
+        if (window.innerWidth < 768) {
+            barCount = 10; // モバイルの場合
+        } else {
+            barCount = 20; // PCの場合
+        }
         for (let i = 0; i < barCount; i++) {
             const bar = document.createElement('div');
             bar.classList.add('bar');
@@ -239,20 +244,28 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // カード以外の場所をタッチしたら、カードのタッチ状態をリセット
-    document.addEventListener('touchstart', (e) => {
-        if (touchedCard && !touchedCard.contains(e.target)) {
-            touchedCard.classList.remove('is-touched');
-            if (touchedCard.isProductCardAndLight) {
-                const img = touchedCard.querySelector('img');
-                if (img && img.dataset.originalSrc) {
-                    img.src = img.dataset.originalSrc;
+    // ボタンのフェードイン処理
+    const mainTopSection = document.getElementById('main_top');
+    const btnWrap = document.querySelector('.btnWrap');
+
+    if (mainTopSection && btnWrap) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // main_topセクションが画面内に表示されたらボタンを表示
+                if (entry.isIntersecting) {
+                    btnWrap.classList.add('is-visible');
+                } else {
+                    // main_topセクションが画面外に出たらボタンを非表示
+                    btnWrap.classList.remove('is-visible');
                 }
-            }
-            touchedCard = null;
-        }
-    });
+            });
+        }, { threshold: 0.1 }); // main_topの10%が表示されたらトリガー
+
+        observer.observe(mainTopSection);
+    }
 });
+
+    
 
 const minimumDisplayTime = 1000; // 1秒 (ミリ秒)
 const loadingStartTime = Date.now();
@@ -260,6 +273,9 @@ const loadingStartTime = Date.now();
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) {
+        // ローディング画面表示中はスクロールを無効にする
+        document.body.classList.add('no-scroll');
+
         const elapsedTime = Date.now() - loadingStartTime;
         const remainingTime = minimumDisplayTime - elapsedTime;
 
@@ -267,6 +283,8 @@ window.addEventListener('load', () => {
             loadingScreen.classList.add('fade-out');
             loadingScreen.addEventListener('transitionend', () => {
                 loadingScreen.style.display = 'none';
+                // ローディング画面が完全に非表示になったらスクロールを有効にする
+                document.body.classList.remove('no-scroll');
                 // ローディング画面が完全に非表示になった後にロゴアニメーションを開始
                 const topLogo = document.querySelector('.top .top-logo'); // .topの子要素として指定
                 if (topLogo) {
