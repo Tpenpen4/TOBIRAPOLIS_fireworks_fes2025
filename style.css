@@ -1,52 +1,3 @@
-.faq-accordion {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.panel {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.panel-header {
-  width: 100%;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: left;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.panel-header:hover {
-  background: #f8f9fa;
-}
-
-.icon {
-  font-size: 20px;
-  transition: transform 0.3s;
-}
-
-.panel-header.active .icon {
-  transform: rotate(45deg);
-}
-
-.panel-content {
-  height: 0;
-  overflow: hidden;
-  transition: height 0.3s ease-out;
-}
-
-.panel-body {
-  padding: 20px;
-}
-
 @font-face {
   font-family: 'katyoufugetsu';
   src: url('font/katyoufugetsu.ttf') format('truetype');
@@ -95,7 +46,7 @@ img{
   }
   40% {
     opacity: 1;
-    filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 15px #fff) drop-shadow(0 0 30px #fff);
+    filter: drop-shadow(0 0 5px #fff) drop_shadow(0 0 15px #fff) drop-shadow(0 0 30px #fff);
   }
   
   100% {
@@ -256,6 +207,9 @@ main {
     body {
         background-position: center center;
     }
+    .fixed-background {
+        background: url("img/back_test.png") no-repeat center center;
+    }
 }
 
 @media (max-width: 768px) {
@@ -266,7 +220,7 @@ main {
         font-size: 0.8rem; /* さらに小さく */
     }
     .date {
-        font-size: 1.2rem; /* さらに小さく */
+        font-size: 2.5rem; /* さらに小さく */
     }
     .countdown .time {
         margin: 5px; /* マージンも調整 */
@@ -314,7 +268,7 @@ main {
 
 .card:hover,
 .card.is-touched {
-
+    background-color: var(--neon-color); /* ホバー時に背景色をネオンの色に */
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 0 20px var(--neon-color, #00f);
     position: relative;
@@ -334,10 +288,6 @@ main {
     opacity: 0;
     transition: opacity 0.3s ease-out;
     border-radius: 15px;
-}
-
-.card.neon-effect:hover::before {
-    opacity: 1;
 }
 
 .card.stamp-animation.neon-effect::before {
@@ -387,7 +337,7 @@ main {
     background-color: #1a1a1a;
     color: #fff;
     border-radius: 8px;
-    width: 80%;
+    width: 90svw;
     max-width: 600px;
     height: 90svh;
     position: relative;
@@ -476,9 +426,6 @@ main {
         padding: 0 5px;
         gap: 2px;
         justify-content: space-around;
-    }
-
-    .bar {
     }
 }
 
@@ -750,4 +697,105 @@ p.copy-right {
 
 .wrap {
   padding: 5%;
+}
+
+.faq-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.panel {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.panel-header {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.panel-header:hover {
+  background: #f8f9fa;
+}
+
+.icon {
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.panel-header.active .icon {
+  transform: rotate(45deg);
+}
+
+.panel-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+/* スクロールバーのスタイル */
+::-webkit-scrollbar {
+  width: 12px; /* スクロールバー全体の幅 */
+}
+
+::-webkit-scrollbar-track {
+  background: #333; /* スクロールバーのトラック（背景）の色を濃いグレーに */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000; /* スクロールバーのつまみ（サム）の色を黒に */
+  border-radius: 20px; /* つまみの角を丸くする */
+  border: 3px solid #333; /* つまみの周りの余白の色をトラックに合わせて濃いグレーに */
+}
+
+.youtube-wrapper {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.youtube-wrapper h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+    .youtube-wrapper h2 {
+        font-size: 2rem;
+    }
+    
+}
+
+.youtube-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.youtube-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
