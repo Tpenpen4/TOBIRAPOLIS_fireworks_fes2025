@@ -23,6 +23,10 @@ body {
 img{
     pointer-events: none;
 }
+
+a {
+    color: #4c9ac0;
+}
 @keyframes neonOn {
   
   0%, 10% ,23% {
@@ -641,6 +645,8 @@ p.copy-right {
 .btn-icon {
   height: 3em; /* 画像のサイズを調整 */
   margin-right: 10px; /* テキストとの間に余白 */
+  /* 影をつける */
+  filter: drop-shadow(2px 2px 2px #fff);
 }
 
 @media screen and (min-width: 768px) {
