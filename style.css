@@ -75,7 +75,7 @@ a {
     transform: scale(0.95) rotate(-2deg);
   }
   100% {
-    transform: scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translateY(-10%);
     opacity: 1;
   }
 }
@@ -96,6 +96,66 @@ a {
     max-height: 50svw;
     width: auto;
     opacity: 0; 
+    transform: translateY(-10%);
+}
+
+
+
+.scrollbar-text {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  padding: 10px 10px 110px;
+  color: #fff;
+  font-size: 20px;
+  font-family: serif;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  writing-mode: vertical-lr;
+  left: auto;
+  right: 20px;
+  transform: none;
+}
+
+
+
+.scrollbar {
+  position: absolute;
+  right: 20px;
+  left: auto;
+  transform: none;
+  bottom: 1px;
+}
+
+.scrollbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 300px;
+  background: #fff;
+  animation: liner 2.5s cubic-bezier(1, 0, 0, 1) infinite;
+}
+
+@keyframes liner {
+  0% {
+    transform: scale(1, 0);
+    transform-origin: 0 0;
+  }
+  30% {
+    transform: scale(1, 1);
+    transform-origin: 0 0;
+  }
+  70% {
+    transform: scale(1, 1);
+    transform-origin: 0 100%;
+  }
+  100% {
+    transform: scale(1, 0);
+    transform-origin: 0 100%;
+  }
 }
 
 [data-theme="light"] .top-logo.animate-light {
@@ -436,11 +496,10 @@ main {
 
 .modal-body {
     padding: 20px 20px;
-    max-height: 70vh;
+    height: calc(90svh - 120px);
     overflow-y: auto;
     background-color: #1a1a1a;
     color: #fff;
-    flex-grow: 1; 
 }
 
 
@@ -570,7 +629,7 @@ p.copy-right {
     }
 }
 
-.precautions-modal {
+.precautions-modal * {
   font-family: sans-serif !important;
 }
 

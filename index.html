@@ -24,8 +24,15 @@
     <link rel="preload" as="image" href="img/logo/PET.png">
     <link rel="stylesheet" href="style.css?v=028">
     <style>
-      body.no-scroll {
+      html.no-scroll, body.no-scroll {
         overflow: hidden;
+        height: 100%;
+      }
+      body.no-scroll {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
       }
     </style>
   </head>
@@ -34,7 +41,12 @@
     <img class="loading-logo" src="img/logo/PET.png" alt="ローディングロゴ">
   </div>
   <div class="fixed-background"></div>
-  <div class="top"><img class="top-logo" src="img/logo/event-rogo.svg" alt="トビラポリスイベント企画部のロゴ" width="284" height="285"></div>
+  <div class="top"><img class="top-logo" src="img/logo/event-rogo.svg" alt="トビラポリスイベント企画部のロゴ" width="284" height="285">
+    <div class="scrollbar-text">
+      <span>scroll</span>
+    </div>
+    <div class="scrollbar"></div>
+  </div>
   <section id="main_top">
     <main>
       <div class="wrap">
@@ -68,7 +80,7 @@
             <h3>販売物</h3>
             <p>clusterで使用できるアイテムやアクセサリーの販売をはじめました！</p>
           </div>
-          <div class="card modal-open-btn fade-in-section neon-effect" data-content-url="pages/soon.html">
+          <div class="card modal-open-btn fade-in-section neon-effect" data-content-url="pages/journal.html">
             <img src="img/Journal.png" alt="" >
             <h3>Journalスタンプ</h3>
             <p>Tobiratory Journalとのコラボ！影猫を探し出してスタンプをゲット！</p>
@@ -78,7 +90,7 @@
             <h3>タイムテーブル</h3>
             <p>花火が何時からはじまるか等をわかりやすくまとめました！</p>
           </div>
-          <div class="card modal-open-btn fade-in-section neon-effect" data-content-url="pages/soon.html" data-modal-target="precautions">
+          <div class="card modal-open-btn fade-in-section neon-effect" data-content-url="pages/attention.html" data-modal-target="precautions">
             <img src="img/attention.png" alt="">
             <h3>注意事項</h3>
             <p>参加前にご確認ください。</p>
@@ -95,10 +107,10 @@
           <a href="test" target="_blank" style="background:#007700;"><img class="btn-icon" src="img/logo/clusterlogo_trans_color.svg" alt="cluster logo"><b>プレオープンワールド</b><i></i></a>
         </div>
         <div class="btn_01">
-          <a href="test" target="_blank" style="background:#ce2700;"><img class="btn-icon" src="img/logo/clusterlogo_trans_color.svg" alt="cluster logo"><b>縁日エリア</b><i></i></a>
+          <a href="test" target="_blank" style="background:#ce2700;"><img class="btn-icon" src="img/logo/clusterlogo_trans_color.svg" alt="cluster logo"><b>縁日ワールド</b><i></i></a>
         </div>
         <div class="btn_01">
-          <a href="test" target="_blank" style="background:#1b1464;"><img class="btn-icon" src="img/logo/clusterlogo_trans_color.svg" alt="cluster logo"><b>花火エリア</b><i></i></a>
+          <a href="test" target="_blank" style="background:#1b1464;"><img class="btn-icon" src="img/logo/clusterlogo_trans_color.svg" alt="cluster logo"><b>花火ワールド</b><i></i></a>
         </div>
       </div>
       </div>

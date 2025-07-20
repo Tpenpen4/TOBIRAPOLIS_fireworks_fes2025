@@ -181,10 +181,11 @@ function setupAccordion() {
         });
     };
 
-    setInterval(randomizeBarHeights, 150);
+    let spectrumAnimation, closeModalTimeout, scrollPosition;
 
     modalOpenBtns.forEach(btn => {
       btn.addEventListener('click', () => {
+        clearTimeout(closeModalTimeout);
         const contentUrl = btn.dataset.contentUrl;
         const modalTarget = btn.dataset.modalTarget;
 
@@ -206,9 +207,14 @@ function setupAccordion() {
             // Ensure modal is visible for transition
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
+              modalBody.scrollTop = 0; // スクロール位置をリセット
               modalOverlay.classList.add('active');
               document.querySelector('.modal-content').classList.add('active');
               setupAccordion(); // ここでアコーディオンのセットアップ関数を呼び出す
+              spectrumAnimation = setInterval(randomizeBarHeights, 150);
+              scrollPosition = window.pageYOffset;
+              document.body.style.top = `-${scrollPosition}px`;
+              document.body.classList.add('no-scroll');
             });
           })
           .catch(error => {
@@ -217,8 +223,12 @@ function setupAccordion() {
             // Ensure modal is visible for transition
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
+              modalBody.scrollTop = 0; // スクロール位置をリセット
               modalOverlay.classList.add('active');
               document.querySelector('.modal-content').classList.add('active');
+              scrollPosition = window.pageYOffset;
+              document.body.style.top = `-${scrollPosition}px`;
+              document.body.classList.add('no-scroll');
             });
           });
       });
@@ -228,10 +238,13 @@ function setupAccordion() {
       const modalContent = document.querySelector('.modal-content');
       modalOverlay.classList.remove('active');
       modalContent.classList.remove('active');
-      modalOverlay.addEventListener('transitionend', function handler() {
+      document.body.classList.remove('no-scroll');
+      document.body.style.removeProperty('top');
+      window.scrollTo(0, scrollPosition);
+      clearInterval(spectrumAnimation);
+      closeModalTimeout = setTimeout(() => {
         modalOverlay.style.display = 'none';
-        modalOverlay.removeEventListener('transitionend', handler);
-      }, { once: true });
+      }, 500);
     });
 
     modalOverlay.addEventListener('click', (e) => {
@@ -239,10 +252,13 @@ function setupAccordion() {
         const modalContent = document.querySelector('.modal-content');
         modalOverlay.classList.remove('active');
         modalContent.classList.remove('active');
-        modalOverlay.addEventListener('transitionend', function handler() {
+        document.body.classList.remove('no-scroll');
+        document.body.style.removeProperty('top');
+        window.scrollTo(0, scrollPosition);
+        clearInterval(spectrumAnimation);
+        closeModalTimeout = setTimeout(() => {
           modalOverlay.style.display = 'none';
-          modalOverlay.removeEventListener('transitionend', handler);
-        }, { once: true });
+        }, 500);
       }
     });
 
