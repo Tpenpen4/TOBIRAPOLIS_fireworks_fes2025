@@ -447,7 +447,7 @@ main {
     width: 20px;
     border-radius: 0;
     
-    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    background: linear-gradient(1deg, #ff00ff,#39FF14,#00a0e9);
     /* background: #fff; */
     
     background-size: 400% 400%;
@@ -469,8 +469,8 @@ main {
         to bottom, 
         transparent,
         transparent 1px,
-        rgba(0, 0, 0) 10px,
-        rgba(0, 0, 0) 0px
+        #1a1a1a 5px,
+        #1a1a1a 10px
     );
     pointer-events: none; 
 }
@@ -481,7 +481,7 @@ main {
 @keyframes rainbow {
     to {
         
-        background-position-x: calc(var(--gradient-offset) + 300%);
+        background-position-y: calc(var(--gradient-offset) + 300%);
     }
 }
 
@@ -704,8 +704,6 @@ p.copy-right {
 .btn-icon {
   height: 3em; /* 画像のサイズを調整 */
   margin-right: 10px; /* テキストとの間に余白 */
-  /* 影をつける */
-  filter: drop-shadow(2px 2px 2px #fff);
 }
 
 @media screen and (min-width: 768px) {

@@ -1,33 +1,107 @@
 function showRestTime() {
-  const now = new Date();
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceState = urlParams.get('state');
+
+  let now = new Date();
   const goal = new Date('2025-08-17T19:30:00'); // イベント開催日時
+  const end = new Date('2025-08-17T22:00:00'); // イベント終了日時
   const startDate = new Date('2025-05-10T15:00:00'); // プログレスバーの開始日時 (本日)
+  const preOpenStartDate = new Date('2025-08-13T00:00:00');
+  const preOpenEndDate = new Date('2025-08-16T23:59:00');
+  const buttonVisibilityStartDate = new Date('2025-08-17T19:00:00'); // ワールドボタン表示開始日時
 
+  const countdownContainer = document.querySelector('.countdown-container');
   const countdownTimeDisplay = document.getElementById('countdown-time-display');
+  const countdownText = countdownContainer.querySelector('h2');
   const progressBar = document.getElementById('progress-bar');
+  const youtubeWrapperTitle = document.querySelector('.youtube-wrapper h2');
+  const youtubeIframe = document.querySelector('.youtube-container iframe');
 
-  const totalDuration = goal.getTime() - startDate.getTime();
-  const restMillisecond = goal.getTime() - now.getTime();
+  const defaultYoutubeUrl = 'https://www.youtube-nocookie.com/embed/6oIrMch8MFY?si=2EccHVMvl3XAW-WL&playsinline=1&rel=0';
+  const eventYoutubeUrl = 'https://www.youtube-nocookie.com/embed/JVKjzM_mmY8?si=ZougCWL_XYpPRqgg&playsinline=1&rel=0';
 
-  if (restMillisecond <= 0) {
-    countdownTimeDisplay.textContent = "イベント開催中！";
-    progressBar.style.width = '100%';
-    clearInterval(window.countdownInterval); // カウントダウンを停止
-    return;
+  // --- Time override for testing ---
+  if (forceState === 'during') {
+    now = goal;
+  } else if (forceState === 'after') {
+    now = end;
+  } else if (forceState === 'preopen') {
+    now = preOpenStartDate;
+  } else if (forceState === 'button_visible') {
+    now = buttonVisibilityStartDate;
+  }
+  // ---
+
+  // --- Button Visibility Logic ---
+  const buttons = document.querySelectorAll('.btnWrap .btn_01');
+  const btnPreOpen = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === 'プレオープンワールド');
+  const btnEnnichi = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === '縁日ワールド');
+  const btnHanabi = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === '花火ワールド');
+  const btnCredit = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === 'クレジット');
+
+  const isPreOpenTime = now >= preOpenStartDate && now <= preOpenEndDate;
+  const isButtonVisibleTime = now >= buttonVisibilityStartDate && now < end;
+  const isAfterEvent = now >= end;
+
+  // Hide all buttons by default
+  if (btnPreOpen) btnPreOpen.style.display = 'none';
+  if (btnEnnichi) btnEnnichi.style.display = 'none';
+  if (btnHanabi) btnHanabi.style.display = 'none';
+  if (btnCredit) btnCredit.style.display = 'none';
+
+  // Show buttons based on the current state
+  if (isAfterEvent) {
+    if (btnCredit) btnCredit.style.display = 'block';
+  } else if (isButtonVisibleTime) {
+    if (btnEnnichi) btnEnnichi.style.display = 'block';
+    if (btnHanabi) btnHanabi.style.display = 'block';
+  } else if (isPreOpenTime) {
+    if (btnPreOpen) btnPreOpen.style.display = 'block';
+  } else {
+    // Before pre-open period, show nothing.
   }
 
-  const day = Math.floor(restMillisecond / (1000 * 60 * 60 * 24));
-  const hour = Math.floor((restMillisecond % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minute = Math.floor((restMillisecond % (1000 * 60 * 60)) / (1000 * 60));
-  const second = Math.floor((restMillisecond % (1000 * 60)) / 1000);
+  const restMillisecond = goal.getTime() - now.getTime();
+  const endMillisecond = end.getTime() - now.getTime();
 
-  countdownTimeDisplay.textContent = `${day}日 ${String(hour).padStart(2, '0')}時間 ${String(minute).padStart(2, '0')}分 ${String(second).padStart(2, '0')}秒`;
-
-  let progressPercentage = (restMillisecond / totalDuration) * 100;
-  if (progressPercentage < 0) progressPercentage = 0; // 終了日時が過去の場合
-  if (progressPercentage > 100) progressPercentage = 100; // 開始日時が未来の場合
-
-  progressBar.style.width = `${progressPercentage}%`;
+  // --- Countdown Display & YouTube URL Logic ---
+  if (endMillisecond <= 0) {
+    countdownText.style.display = 'none';
+    countdownTimeDisplay.textContent = "イベントは終了しました";
+    progressBar.style.width = '100%';
+    if (youtubeWrapperTitle) youtubeWrapperTitle.textContent = '配信アーカイブ';
+    if (youtubeIframe && youtubeIframe.src !== eventYoutubeUrl) {
+        youtubeIframe.src = eventYoutubeUrl;
+    }
+    clearInterval(window.countdownInterval);
+    return;
+  } else if (restMillisecond <= 0) {
+    countdownText.style.display = 'none';
+    countdownTimeDisplay.textContent = "花火大会開催中！";
+    progressBar.style.width = '100%';
+    if (youtubeWrapperTitle) youtubeWrapperTitle.textContent = '花火大会 開催中！';
+    if (youtubeIframe && youtubeIframe.src !== eventYoutubeUrl) {
+        youtubeIframe.src = eventYoutubeUrl;
+    }
+    clearInterval(window.countdownInterval);
+    return;
+  } else {
+    countdownText.style.display = 'block'; // Ensure it's visible
+    const totalDuration = goal.getTime() - startDate.getTime();
+    const day = Math.floor(restMillisecond / (1000 * 60 * 60 * 24));
+    const hour = Math.floor((restMillisecond % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minute = Math.floor((restMillisecond % (1000 * 60 * 60)) / (1000 * 60));
+    const second = Math.floor((restMillisecond % (1000 * 60)) / 1000);
+    countdownTimeDisplay.textContent = `${day}日 ${String(hour).padStart(2, '0')}時間 ${String(minute).padStart(2, '0')}分 ${String(second).padStart(2, '0')}秒`;
+    let progressPercentage = (restMillisecond / totalDuration) * 100;
+    if (progressPercentage < 0) progressPercentage = 0;
+    if (progressPercentage > 100) progressPercentage = 100;
+    progressBar.style.width = `${progressPercentage}%`;
+    // Ensure default YouTube URL is set if not already
+    if (youtubeIframe && youtubeIframe.src !== defaultYoutubeUrl) {
+        youtubeIframe.src = defaultYoutubeUrl;
+    }
+  }
 }
 
 
