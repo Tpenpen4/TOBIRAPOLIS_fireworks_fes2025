@@ -5,9 +5,9 @@ function showRestTime() {
   let now = new Date();
   const goal = new Date('2025-08-17T19:30:00'); // イベント開催日時
   const end = new Date('2025-08-17T22:00:00'); // イベント終了日時
-  const startDate = new Date('2025-05-10T15:00:00'); // プログレスバーの開始日時 (本日)
-  const preOpenStartDate = new Date('2025-08-13T00:00:00');
-  const preOpenEndDate = new Date('2025-08-16T23:59:00');
+  const startDate = new Date('2025-05-10T15:00:00'); // プログレスバーの開始日時
+  const preOpenStartDate = new Date('2025-08-13T00:00:00'); // プレオープン開始日時
+  const preOpenEndDate = new Date('2025-08-16T23:59:00'); // プレオープン終了日時
   const buttonVisibilityStartDate = new Date('2025-08-17T19:00:00'); // ワールドボタン表示開始日時
 
   const countdownContainer = document.querySelector('.countdown-container');
@@ -17,10 +17,9 @@ function showRestTime() {
   const youtubeWrapperTitle = document.querySelector('.youtube-wrapper h2');
   const youtubeIframe = document.querySelector('.youtube-container iframe');
 
-  const defaultYoutubeUrl = 'https://www.youtube-nocookie.com/embed/6oIrMch8MFY?si=2EccHVMvl3XAW-WL&playsinline=1&rel=0';
-  const eventYoutubeUrl = 'https://www.youtube-nocookie.com/embed/JVKjzM_mmY8?si=ZougCWL_XYpPRqgg&playsinline=1&rel=0';
+  const defaultYoutubeUrl = 'https://www.youtube.com/embed/6oIrMch8MFY?si=2vt2u-EVXRkH6FFu&playsinline=1&rel=0';
+  const eventYoutubeUrl = 'https://www.youtube-nocookie.com/embed/UhCI5kItiDE?si=Px7Qh_VevpLtUxlt&playsinline=1&rel=0';
 
-  // --- Time override for testing ---
   if (forceState === 'during') {
     now = goal;
   } else if (forceState === 'after') {
@@ -30,9 +29,7 @@ function showRestTime() {
   } else if (forceState === 'button_visible') {
     now = buttonVisibilityStartDate;
   }
-  // ---
 
-  // --- Button Visibility Logic ---
   const buttons = document.querySelectorAll('.btnWrap .btn_01');
   const btnPreOpen = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === 'プレオープンワールド');
   const btnEnnichi = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === '縁日ワールド');
@@ -43,13 +40,11 @@ function showRestTime() {
   const isButtonVisibleTime = now >= buttonVisibilityStartDate && now < end;
   const isAfterEvent = now >= end;
 
-  // Hide all buttons by default
   if (btnPreOpen) btnPreOpen.style.display = 'none';
   if (btnEnnichi) btnEnnichi.style.display = 'none';
   if (btnHanabi) btnHanabi.style.display = 'none';
   if (btnCredit) btnCredit.style.display = 'none';
 
-  // Show buttons based on the current state
   if (isAfterEvent) {
     if (btnCredit) btnCredit.style.display = 'block';
   } else if (isButtonVisibleTime) {
@@ -58,13 +53,11 @@ function showRestTime() {
   } else if (isPreOpenTime) {
     if (btnPreOpen) btnPreOpen.style.display = 'block';
   } else {
-    // Before pre-open period, show nothing.
   }
 
   const restMillisecond = goal.getTime() - now.getTime();
   const endMillisecond = end.getTime() - now.getTime();
 
-  // --- Countdown Display & YouTube URL Logic ---
   if (endMillisecond <= 0) {
     countdownText.style.display = 'none';
     countdownTimeDisplay.textContent = "イベントは終了しました";
@@ -78,15 +71,18 @@ function showRestTime() {
   } else if (restMillisecond <= 0) {
     countdownText.style.display = 'none';
     countdownTimeDisplay.textContent = "花火大会開催中！";
-    progressBar.style.width = '100%';
-    if (youtubeWrapperTitle) youtubeWrapperTitle.textContent = '花火大会 開催中！';
+    const eventDuration = end.getTime() - goal.getTime();
+    const elapsedDuringEvent = now.getTime() - goal.getTime();
+    let progressPercentage = (elapsedDuringEvent / eventDuration) * 100;
+    if (progressPercentage < 0) progressPercentage = 0;
+    if (progressPercentage > 100) progressPercentage = 100;
+    progressBar.style.width = `${progressPercentage}%`;
+    if (youtubeWrapperTitle) youtubeWrapperTitle.textContent = 'LIVE配信中！';
     if (youtubeIframe && youtubeIframe.src !== eventYoutubeUrl) {
         youtubeIframe.src = eventYoutubeUrl;
     }
-    clearInterval(window.countdownInterval);
-    return;
   } else {
-    countdownText.style.display = 'block'; // Ensure it's visible
+    countdownText.style.display = 'block';
     const totalDuration = goal.getTime() - startDate.getTime();
     const day = Math.floor(restMillisecond / (1000 * 60 * 60 * 24));
     const hour = Math.floor((restMillisecond % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -97,22 +93,17 @@ function showRestTime() {
     if (progressPercentage < 0) progressPercentage = 0;
     if (progressPercentage > 100) progressPercentage = 100;
     progressBar.style.width = `${progressPercentage}%`;
-    // Ensure default YouTube URL is set if not already
     if (youtubeIframe && youtubeIframe.src !== defaultYoutubeUrl) {
         youtubeIframe.src = defaultYoutubeUrl;
     }
   }
 }
-
-
-
 function setupAccordion() {
   document.querySelectorAll('.panel-header').forEach(trigger => {
     trigger.addEventListener('click', function() {
       const content = this.nextElementSibling;
       const panel = this.closest('.panel');
 
-      // 他のパネルを閉じる
       document.querySelectorAll('.panel-header').forEach(otherTrigger => {
         if (otherTrigger !== this) {
           otherTrigger.classList.remove('active');
@@ -121,21 +112,18 @@ function setupAccordion() {
         }
       });
 
-      // クリックしたパネルの処理
       this.classList.toggle('active');
 
       if (this.classList.contains('active')) {
-        // 開く時は中身の高さを計算
         const body = content.querySelector('.panel-body');
         content.style.height = body.offsetHeight + 'px';
       } else {
-        // 閉じる時は0
         content.style.height = '0';
       }
     });
   });
 }
-    let touchedCard = null; // タッチされたカードを追跡
+    let touchedCard = null;
     const modalOpenBtns = document.querySelectorAll('.modal-open-btn');
     const modalOverlay = document.getElementById('modal-overlay');
     const modalCloseBtn = document.querySelector('.modal-close-btn');
@@ -143,7 +131,6 @@ function setupAccordion() {
     const spectrumContainers = document.querySelectorAll('.audio-spectrum');
     const cards = document.querySelectorAll('.card.neon-effect');
 
-    // Set data-theme on html element based on prefers-color-scheme
     const setTheme = () => {
         const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme', prefersDarkMode ? 'dark' : 'light');
@@ -153,10 +140,9 @@ function setupAccordion() {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setTheme);
 
     cards.forEach(card => {
-        const randomColor = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`; // 6桁になるように0埋め
+        const randomColor = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
         card.style.setProperty('--neon-color', randomColor);
 
-        // 色の明るさを判定し、文字色を調整
         const hexToRgb = (hex) => {
             const r = parseInt(hex.substring(1, 3), 16);
             const g = parseInt(hex.substring(3, 5), 16);
@@ -168,21 +154,19 @@ function setupAccordion() {
             const { r, g, b } = hexToRgb(hexColor);
             // 輝度を計算 (ITU-R BT.709)
             const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-            return luminance > 0.5; // 閾値は調整可能
+            return luminance > 0.5; // 閾値
         };
 
-        let isProductCardAndLight = false; // Flag to check if it's a product card and light color
-
+        let isProductCardAndLight = false;
         if (isLightColor(randomColor)) {
             card.classList.add('light-neon-bg');
 
-            // 販売物のカードにのみ画像変更のロジックを適用
             if (card.dataset.productCard !== undefined) {
                 isProductCardAndLight = true;
                 const cardImage = card.querySelector('img');
                 if (cardImage) {
                     const originalSrc = cardImage.src;
-                    cardImage.dataset.originalSrc = originalSrc; // 元のsrcを保存
+                    cardImage.dataset.originalSrc = originalSrc;
 
                     card.addEventListener('mouseenter', () => {
                         cardImage.src = 'img/logo/clusterlogo_1line_trans_color.svg';
@@ -195,11 +179,9 @@ function setupAccordion() {
             }
         }
 
-        // タッチイベントの処理
         card.addEventListener('touchstart', function(event) {
-            event.stopPropagation(); // ドキュメントへの伝播を停止
+            event.stopPropagation();
 
-            // 他のカードがタッチ状態ならリセット
             if (touchedCard && touchedCard !== this) {
                 touchedCard.classList.remove('is-touched');
                 if (touchedCard.isProductCardAndLight) {
@@ -211,7 +193,7 @@ function setupAccordion() {
             }
 
             this.classList.add('is-touched');
-            this.isProductCardAndLight = isProductCardAndLight; // 判定結果を要素に保存
+            this.isProductCardAndLight = isProductCardAndLight;
 
             if (isProductCardAndLight) {
                 const cardImage = this.querySelector('img');
@@ -223,14 +205,13 @@ function setupAccordion() {
         });
     });
 
-    // オーディオスペクトラムのバーを生成する関数
     const createSpectrumBars = (container) => {
-        container.innerHTML = ''; // 既存のバーをクリア
+        container.innerHTML = '';
         let barCount;
         if (window.innerWidth < 768) {
-            barCount = 10; // モバイルの場合
+            barCount = 10; // スマホ
         } else {
-            barCount = 20; // PCの場合
+            barCount = 20; // PC
         }
         for (let i = 0; i < barCount; i++) {
             const bar = document.createElement('div');
@@ -250,7 +231,7 @@ function setupAccordion() {
     const randomizeBarHeights = () => {
         const allBars = document.querySelectorAll('.bar');
         allBars.forEach(bar => {
-            const randomHeight = Math.floor(Math.random() * 95) + 5; // 5%から100%の間のランダムな高さ
+            const randomHeight = Math.floor(Math.random() * 95) + 5;
             bar.style.height = `${randomHeight}%`;
         });
     };
@@ -263,7 +244,6 @@ function setupAccordion() {
         const contentUrl = btn.dataset.contentUrl;
         const modalTarget = btn.dataset.modalTarget;
 
-        // 注意事項モーダル用のクラスを付け外し
         if (modalTarget === 'precautions') {
           modalBody.classList.add('precautions-modal');
         } else {
@@ -278,13 +258,12 @@ function setupAccordion() {
           })
           .then(html => {
             modalBody.innerHTML = html;
-            // Ensure modal is visible for transition
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
-              modalBody.scrollTop = 0; // スクロール位置をリセット
+              modalBody.scrollTop = 0;
               modalOverlay.classList.add('active');
               document.querySelector('.modal-content').classList.add('active');
-              setupAccordion(); // ここでアコーディオンのセットアップ関数を呼び出す
+              setupAccordion();
               spectrumAnimation = setInterval(randomizeBarHeights, 150);
               scrollPosition = window.pageYOffset;
               document.body.style.top = `-${scrollPosition}px`;
@@ -294,10 +273,9 @@ function setupAccordion() {
           .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
             modalBody.innerHTML = '<p>準備中です。</p>';
-            // Ensure modal is visible for transition
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
-              modalBody.scrollTop = 0; // スクロール位置をリセット
+              modalBody.scrollTop = 0;
               modalOverlay.classList.add('active');
               document.querySelector('.modal-content').classList.add('active');
               scrollPosition = window.pageYOffset;
@@ -336,13 +314,12 @@ function setupAccordion() {
       }
     });
 
-    // フェードアップアニメーションのJavaScript
     const fadeInSections = document.querySelectorAll('.fade-in-section');
 
     const observerOptions = {
-        root: null, // ビューポートをルートとする
+        root: null,
         rootMargin: '0px',
-        threshold: 0.1 // 要素の10%が見えたら発火
+        threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
@@ -351,8 +328,8 @@ function setupAccordion() {
                 const index = Array.from(fadeInSections).indexOf(entry.target);
                 setTimeout(() => {
                     entry.target.classList.add('is-visible');
-                }, index * 100); // 100ms delay per card
-                observer.unobserve(entry.target); // 一度表示されたら監視を停止
+                }, index * 100);
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -361,35 +338,31 @@ function setupAccordion() {
         observer.observe(section);
     });
 
-    // ボタンのフェードイン処理
     const mainTopSection = document.getElementById('main_top');
     const btnWrap = document.querySelector('.btnWrap');
 
     if (mainTopSection && btnWrap) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // main_topセクションが画面内に表示されたらボタンを表示
                 if (entry.isIntersecting) {
                     btnWrap.classList.add('is-visible');
                 } else {
-                    // main_topセクションが画面外に出たらボタンを非表示
                     btnWrap.classList.remove('is-visible');
                 }
             });
-        }, { threshold: 0.1 }); // main_topの10%が表示されたらトリガー
+        }, { threshold: 0.1 });
 
         observer.observe(mainTopSection);
     }
 
     
 
-const minimumDisplayTime = 1000; // 1秒 (ミリ秒)
+const minimumDisplayTime = 1000;
 const loadingStartTime = Date.now();
 
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) {
-        // ローディング画面表示中はスクロールを無効にする
         document.body.classList.add('no-scroll');
 
         const elapsedTime = Date.now() - loadingStartTime;
@@ -399,10 +372,8 @@ window.addEventListener('load', () => {
             loadingScreen.classList.add('fade-out');
             loadingScreen.addEventListener('transitionend', () => {
                 loadingScreen.style.display = 'none';
-                // ローディング画面が完全に非表示になったらスクロールを有効にする
                 document.body.classList.remove('no-scroll');
-                // ローディング画面が完全に非表示になった後にロゴアニメーションを開始
-                const topLogo = document.querySelector('.top .top-logo'); // .topの子要素として指定
+                const topLogo = document.querySelector('.top .top-logo');
                 if (topLogo) {
                     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
                     if (prefersDarkMode) {
@@ -422,7 +393,20 @@ window.addEventListener('load', () => {
     }
 });
 
-// Initial call to display the countdown immediately
 showRestTime();
-// Update the countdown every second
-setInterval(showRestTime, 1000);
+window.countdownInterval = setInterval(showRestTime, 1000);
+function openModalByHash() {
+    const hash = window.location.hash;
+    let targetButton = null;
+
+    switch (hash) {
+        case '#artists':
+            targetButton = document.querySelector('.modal-open-btn[data-content-url="pages/artists.html"]');
+            break;
+    }
+    if (targetButton) {
+        targetButton.click();
+    }
+}
+document.addEventListener('DOMContentLoaded', openModalByHash);
+window.addEventListener('hashchange', openModalByHash);

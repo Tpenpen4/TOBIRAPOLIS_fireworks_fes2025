@@ -2,12 +2,9 @@
   font-family: 'katyoufugetsu';
   src: url('font/katyoufugetsu.ttf') format('truetype');
 }
-
-html,
-body {
+html,body {
   width: 100%;
 }
-
 body { 
   margin: 0;
   position: relative;
@@ -23,9 +20,11 @@ body {
 img{
     pointer-events: none;
 }
-
 a {
     color: #4c9ac0;
+}
+p {
+    font-size: larger;
 }
 @keyframes neonOn {
   
@@ -58,7 +57,6 @@ a {
       filter: none;
   }
 }
-
 @keyframes stamp {
   0% {
     transform: scale(2) rotate(-15deg);
@@ -79,8 +77,6 @@ a {
     opacity: 1;
   }
 }
-
-
 .top{
     width:100%;
     height: 100vh;
@@ -90,17 +86,12 @@ a {
     align-items: center;
     overflow: hidden; 
 }
-
-
 .top-logo {
     max-height: 50svw;
     width: auto;
     opacity: 0; 
     transform: translateY(-10%);
 }
-
-
-
 .scrollbar-text {
   display: inline-block;
   position: absolute;
@@ -117,9 +108,6 @@ a {
   right: 20px;
   transform: none;
 }
-
-
-
 .scrollbar {
   position: absolute;
   right: 20px;
@@ -127,7 +115,6 @@ a {
   transform: none;
   bottom: 1px;
 }
-
 .scrollbar::after {
   content: "";
   position: absolute;
@@ -138,7 +125,6 @@ a {
   background: #fff;
   animation: liner 2.5s cubic-bezier(1, 0, 0, 1) infinite;
 }
-
 @keyframes liner {
   0% {
     transform: scale(1, 0);
@@ -157,11 +143,9 @@ a {
     transform-origin: 0 100%;
   }
 }
-
 [data-theme="light"] .top-logo.animate-light {
     animation: neonOn 4s ease-out 1 forwards;
 }
-
 [data-theme="dark"] .top-logo.animate-dark {
     animation: stamp 1s ease-out forwards;
 }
@@ -174,8 +158,6 @@ main {
     display: flex;
     flex-direction: column;
 }
-
-
 .date {
     font-size: 6rem;
     font-weight: bold;
@@ -195,7 +177,6 @@ main {
     box-sizing: border-box;
     text-align: center;
 }
-
 .countdown-time-display {
     font-size: clamp(1.5rem, 3.5vw, 2.5rem); 
     font-weight: bold;
@@ -205,7 +186,6 @@ main {
     overflow: hidden; 
     text-overflow: ellipsis; 
 }
-
 .progress-bar-container {
     width: 100%;
     height: 10px;
@@ -214,16 +194,13 @@ main {
     overflow: hidden;
     margin-top: 10px;
 }
-
 .progress-bar {
     height: 100%;
     width: 0%; 
-    background: linear-gradient(to right, #ff0844, #ffb199); 
+    background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); 
     border-radius: 5px;
     transition: width 1s linear; 
 }
-
-
 #loading-screen {
     position: fixed;
     top: 0;
@@ -237,25 +214,20 @@ main {
     z-index: 9999; 
     transition: opacity 1s ease-out;
 }
-
 #loading-screen.fade-out {
     opacity: 0;
     pointer-events: none; 
 }
-
-
 @keyframes logo-fade {
     0% { opacity: 0; transform: scale(0.8); }
     50% { opacity: 1; transform: scale(1); }
     100% { opacity: 0; transform: scale(0.8); }
 }
-
 #loading-screen .loading-logo {
     animation: logo-fade 2s ease-in-out infinite;
     max-width: 30%; 
     max-height: 30%; 
 }
-
 .fixed-background {
     position: fixed;
     top: 0;
@@ -266,7 +238,6 @@ main {
     background-size: cover;
     z-index: -1;
 }
-
 @media (max-width: 768px) {
     body {
         background-position: center center;
@@ -275,29 +246,28 @@ main {
         background: url("img/back_test.png") no-repeat center center;
     }
 }
-
 @media (max-width: 768px) {
     #day,#hour,#minute,#second {
-        font-size: 1rem; /* さらに小さく */
+        font-size: 1rem;
     }
     .label {
-        font-size: 0.8rem; /* さらに小さく */
+        font-size: 0.8rem;
     }
     .date {
-        font-size: 2.5rem; /* さらに小さく */
+        font-size: 2.5rem;
     }
     .countdown .time {
-        margin: 5px; /* マージンも調整 */
-        padding: 10px; /* パディングも調整 */
+        margin: 5px;
+        padding: 10px;
     }
     .card-container {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* カードの最小幅を小さく */
-        padding: 0 10px; /* パディングも調整 */
-        justify-content: center; /* カードを中央に配置 */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 0 10px;
+        justify-content: center;
     }
     .card {
         width: 80svw;
-        margin: 0 auto; /* カード自体を中央に配置 */
+        margin: 0 auto;
     }
     .card h3 {
         font-size: 1.2rem;
@@ -306,19 +276,16 @@ main {
         font-size: 0.9rem;
     }
 }
-
 #cards {
     padding: 40px 20px;
     width: 100%;
 }
-
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 20px;
     padding: 0 20px;
 }
-
 .card {
     border-radius: 10px;
     overflow: hidden;
@@ -329,16 +296,13 @@ main {
     pointer-events: fill;
     will-change: transform;
 }
-
-.card:hover,
-.card.is-touched {
-    background-color: var(--neon-color); /* ホバー時に背景色をネオンの色に */
+.card:hover,.card.is-touched {
+    background-color: var(--neon-color);
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 0 20px var(--neon-color, #00f);
     position: relative;
     z-index: 1;
 }
-
 .card.neon-effect::before {
     content: '';
     position: absolute;
@@ -346,35 +310,29 @@ main {
     left: -5px;
     right: -5px;
     bottom: -5px;
-    background: var(--neon-color, #00f); /* Default to blue if not set */
+    background: var(--neon-color, #00f);
     filter: blur(15px);
     z-index: -1;
     opacity: 0;
     transition: opacity 0.3s ease-out;
     border-radius: 15px;
 }
-
 .card.stamp-animation.neon-effect::before {
   display: none;
 }
-
 .card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
-
 .card h3 {
     font-size: 1.5rem;
     padding: 15px;
 }
-
 .card p {
     font-size: 1rem;
     padding: 0 15px 15px;
 }
-
-
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -386,17 +344,14 @@ main {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    opacity: 0; /* 初期状態は透明 */
-    pointer-events: none; /* 初期状態はクリック不可 */
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 0.5s ease-out;
 }
-
 .modal-overlay.active {
     opacity: 1;
-    pointer-events: auto; /* active時はクリック可能 */
+    pointer-events: auto;
 }
-
-
 .modal-content {
     background-color: #1a1a1a;
     color: #fff;
@@ -413,51 +368,34 @@ main {
     transform: translateY(20px) scale(0.95);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-
 .modal-content.active {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
-
-
 .audio-spectrum {
     height: 60px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    /* align-itemsはヘッダーとフッターで個別に設定 */
     padding: 0 0px;
     box-sizing: border-box;
 }
-
-
 .modal-header {
     align-items: flex-start;
 }
-
-
 .modal-footer {
     align-items: flex-end;
 }
-
-
 .bar {
-    position: relative; /* 疑似要素の基準点として必要 */
-    overflow: hidden; /* はみ出した疑似要素を隠す */
+    position: relative;
+    overflow: hidden;
     width: 20px;
     border-radius: 0;
-    
     background: linear-gradient(1deg, #ff00ff,#39FF14,#00a0e9);
-    /* background: #fff; */
-    
     background-size: 400% 400%;
-    
     animation: rainbow 100s linear infinite;
-    
     background-position-x: var(--gradient-offset);
 }
-
-
 .bar::after {
     content: '';
     position: absolute;
@@ -474,17 +412,12 @@ main {
     );
     pointer-events: none; 
 }
-
-
-
-
 @keyframes rainbow {
     to {
         
         background-position-y: calc(var(--gradient-offset) + 300%);
     }
 }
-
 @media (max-width: 768px) {
     .audio-spectrum {
         padding: 0 5px;
@@ -492,8 +425,6 @@ main {
         justify-content: space-around;
     }
 }
-
-
 .modal-body {
     padding: 20px 20px;
     height: calc(90svh - 120px);
@@ -501,8 +432,6 @@ main {
     background-color: #1a1a1a;
     color: #fff;
 }
-
-
 .modal-close-btn {
     position: absolute;
     top: 15px;
@@ -515,12 +444,9 @@ main {
     line-height: 1;
     pointer-events: fill;
 }
-
 .modal-close-btn:hover {
     color: #fff;
 }
-
-
 footer {
     width: 100%;
     height: max-content;
@@ -531,56 +457,46 @@ footer {
     position: relative;
     z-index: 5;
 }
-
 footer .footer-top {
     display: flex;
     flex-direction: row;
     margin-bottom: 10%
 }
-
 footer .footer-top .credit {
     width: 60%;
 }
-
 footer h5 {
     font-size: clamp(0.15rem, calc(0.1rem + 2vw), 4rem) !important;
     font-weight: 600;
     margin: 1em 0;
 }
-
 footer h6 a {
     color: #fff;
 }
-
 footer h6 {
     font-size: clamp(0.15rem, calc(0.1rem + 1.5vw), 4rem) !important;
     font-weight: normal;
     margin-bottom: 1svh;
 }
-
 footer h7 {
     font-size: clamp(0rem, calc(0.3rem + 1vw), 5rem) !important;
 }
-
 footer .footer-top .right-logo {
     display: flex;
     flex-direction: row;
     width: 40%;
     gap: 15%;
 }
-
 footer .footer-top .right-logo img {
     width: 42.5%;
     height: 100%;
     object-fit: contain;
 }
-
 footer .border {
     width: 50%;
     margin: 1em 25%;
     border: solid 1px #fff;
 }
-
 footer .footer-logo {
     width: 100%;
     margin-top: 10vw;
@@ -589,17 +505,14 @@ footer .footer-logo {
     justify-content: center;
     gap: 5vw;
 }
-
 footer .footer-logo a {
     display: block;
     width: 10%;
 }
-
 footer .footer-logo img {
     width: 100%;
     height: 100%;
 }
-
 p.copy-right {
     text-align: center;
     color: #808080;
@@ -609,49 +522,37 @@ p.copy-right {
     font-size: clamp(0.15rem, calc(0.1rem + 1vw), 4rem);
     font-family: sans-serif;
 }
-
 @media (max-width: 768px) {
     footer {
         width: 100%;
         padding: 5%;
     }
-
     footer h5 {
         font-size: clamp(0.15rem, calc(0.1rem + 2vw), 6rem);
     }
-    
     footer h6 {
         font-size: clamp(0.15rem, calc(0.1rem + 1.5vw), 4rem) !important;
     }
-
     footer h7 {
         font-size: clamp(0.15rem, calc(0.1rem + 1vw), 2rem) !important;
     }
 }
-
 .precautions-modal * {
   font-family: sans-serif !important;
 }
-
-
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
-
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
-
-
 .card.light-neon-bg:hover,
 .card.light-neon-bg.is-touched {
     color: #000;
 }
-
-
 .btnWrap {
     position: -webkit-sticky; 
     position: sticky;
@@ -664,25 +565,20 @@ p.copy-right {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    display: flex; /* 追加 */
-    justify-content: center; /* 追加 */
-    gap: 20px; /* 追加 */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
-
-.btnWrap.is-visible {
-    
+.btnWrap.is-visible {   
     opacity: 1;
     transform: translateY(0);
 }
-.btn_01 { /* 追加 */
-    flex: 1; /* 追加 */
+.btn_01 {
+    flex: 1;
 }
 .wrap .btnWrap .btn_01 a {
   margin-top: 0;
 }
-
-
-
 .btn_01 a {
   background: #eec78e;
   border-radius: 30px;
@@ -700,25 +596,21 @@ p.copy-right {
   min-height: 55px;
   padding: 0 20px;
 }
-
 .btn-icon {
-  height: 3em; /* 画像のサイズを調整 */
-  margin-right: 10px; /* テキストとの間に余白 */
+  height: 3em;
+  margin-right: 10px;
 }
-
 @media screen and (min-width: 768px) {
   .btn_01 a {
     max-width: 600px;
     font-size: 15px;
   }
 }
-
 @media (max-width: 768px) {
   .btn-icon {
     display: none;
   }
 }
-
 .btn_01 a i {
   position: absolute;
   height: 18px;
@@ -744,7 +636,6 @@ p.copy-right {
   -webkit-transform: skew(45deg) translateY(-50%) translateX(10px);
           transform: skew(45deg) translateY(-50%) translateX(10px);
 }
-
 .wrap::before {
   content: "";
   display: block;
@@ -757,22 +648,18 @@ p.copy-right {
   background-repeat: no-repeat;
   background-position: 50% 100%;
 }
-
 .wrap {
   padding: 5%;
 }
-
 .faq-accordion {
   max-width: 800px;
   margin: 0 auto;
 }
-
 .panel {
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 10px;
 }
-
 .panel-header {
   width: 100%;
   padding: 15px 20px;
@@ -788,72 +675,58 @@ p.copy-right {
   border-radius: 5px;
   font-weight: bold;
 }
-
 .panel-header:hover {
   background: #f8f9fa;
 }
-
 .icon {
   font-size: 20px;
   transition: transform 0.3s;
 }
-
 .panel-header.active .icon {
   transform: rotate(45deg);
 }
-
 .panel-content {
   height: 0;
   overflow: hidden;
   transition: height 0.3s ease-out;
 }
-
 .panel-body {
   padding: 20px;
 }
-
-/* スクロールバーのスタイル */
 ::-webkit-scrollbar {
-  width: 12px; /* スクロールバー全体の幅 */
+  width: 12px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #333; /* スクロールバーのトラック（背景）の色を濃いグレーに */
+  background: #333;
 }
-
 ::-webkit-scrollbar-thumb {
-  background-color: #000; /* スクロールバーのつまみ（サム）の色を黒に */
-  border-radius: 20px; /* つまみの角を丸くする */
-  border: 3px solid #333; /* つまみの周りの余白の色をトラックに合わせて濃いグレーに */
+  background-color: #000;
+  border-radius: 20px;
+  border: 3px solid #333;
 }
-
 .youtube-wrapper {
     width: 90%;
     max-width: 800px;
     margin: 20px auto;
 }
-
 .youtube-wrapper h2 {
     text-align: center;
     margin-bottom: 10px;
     font-size: 3rem;
 }
-
 @media screen and (max-width: 768px) {
     .youtube-wrapper h2 {
         font-size: 2rem;
     }
     
 }
-
 .youtube-container {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 56.25%;
     overflow: hidden;
     border-radius: 10px;
 }
-
 .youtube-container iframe {
     position: absolute;
     top: 0;
