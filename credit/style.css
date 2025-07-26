@@ -80,7 +80,6 @@ body {
 .flex-group {
     display: grid;
     justify-content: center;
-    
 }
 .credit-outer .heading {
     width: 100%;
