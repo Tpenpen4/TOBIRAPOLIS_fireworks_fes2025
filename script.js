@@ -5,10 +5,11 @@ function showRestTime() {
   let now = new Date();
   const goal = new Date('2025-08-17T19:30:00'); // イベント開催日時
   const end = new Date('2025-08-17T22:00:00'); // イベント終了日時
-  const startDate = new Date('2025-05-10T15:00:00'); // プログレスバーの開始日時
+  const startDate = new Date('2025-08-01T15:00:00'); // プログレスバーの開始日時
   const preOpenStartDate = new Date('2025-08-13T00:00:00'); // プレオープン開始日時
   const preOpenEndDate = new Date('2025-08-16T23:59:00'); // プレオープン終了日時
   const buttonVisibilityStartDate = new Date('2025-08-17T19:00:00'); // ワールドボタン表示開始日時
+  const artistCardChangeDate = new Date('2025-08-08T23:59:00'); // アーティスト様カード変更日時
 
   const countdownContainer = document.querySelector('.countdown-container');
   const countdownTimeDisplay = document.getElementById('countdown-time-display');
@@ -36,6 +37,8 @@ function showRestTime() {
   const btnHanabi = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === '花火ワールド');
   const btnCredit = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === 'クレジット');
 
+  const artistCard = document.querySelector('.card[data-content-url="pages/soon.html"] img[alt=""]')?.closest('.card');
+
   const isPreOpenTime = now >= preOpenStartDate && now <= preOpenEndDate;
   const isButtonVisibleTime = now >= buttonVisibilityStartDate && now < end;
   const isAfterEvent = now >= end;
@@ -53,6 +56,15 @@ function showRestTime() {
   } else if (isPreOpenTime) {
     if (btnPreOpen) btnPreOpen.style.display = 'block';
   } else {
+  }
+
+  // アーティスト様カードのリンクを切り替え
+  if (artistCard) {
+    if (now >= artistCardChangeDate) {
+      artistCard.dataset.contentUrl = 'pages/artists.html';
+    } else {
+      artistCard.dataset.contentUrl = 'pages/soon.html';
+    }
   }
 
   const restMillisecond = goal.getTime() - now.getTime();
@@ -271,8 +283,8 @@ function setupAccordion() {
             });
           })
           .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-            modalBody.innerHTML = '<p>準備中です。</p>';
+            console.error('んにょ', error);
+            modalBody.innerHTML = '<h1>んにょ</h1>';
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
               modalBody.scrollTop = 0;

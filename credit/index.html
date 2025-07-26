@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modeSelector = document.getElementById('mode-selector');
+            const playMusicButton = document.getElementById('play-music');
+            const noMusicButton = document.getElementById('no-music');
+            const mainContent = document.querySelector('main');
+            const audio = document.getElementById('bgm');
+
+            playMusicButton.addEventListener('click', () => {
+                modeSelector.style.display = 'none';
+                mainContent.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // 自動スクロール時はoverflowをhiddenに
+                audio.play();
+                mainContent.style.animation = 'scroll 260s linear forwards';
+            });
+
+            noMusicButton.addEventListener('click', () => {
+                modeSelector.style.display = 'none';
+                mainContent.style.display = 'block';
+                document.body.style.overflow = 'auto'; // 手動スクロール時はoverflowをautoに
+                // 音楽は再生せず、スクロールアニメーションも適用しない
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="mode-selector">
+        <div class="mode-option">
+            <button id="play-music">
+                <img src="note.svg" alt="Play with music">
+            </button>
+            <p>自動</p>
+        </div>
+        <div class="mode-option">
+            <button id="no-music">
+                <img src="note.svg" alt="No music" class="no-music-icon">
+            </button>
+            <p>手動</p>
+        </div>
+    </div>
+    <main style="display: none;">
+        <audio id="bgm" src="audio/ondo.mp3"></audio>
+        <div id="bg"></div>
+        <div class="top-heading">
+            <ruby>クレジット</ruby>
+            <h2>CREDIT</h2>
+        </div>
+        <div class="credit-outer">
+            <div class="cast">
+                <div class="heading">
+                    <ruby>出演者</ruby>
+                    <h3>ARTIST</h3>
+                </div>
+                <div class="cast flex-group">
+                    <h4><a href="https://x.com/h1rok1music" target="_blank"><u>Hiroki</u></a></h4>
+                    <h4><a href="https://x.com/Kaisyu_JPN" target="_blank"><u>海舟</u></a></h4>
+                    <h4><a href="https://x.com/Pentonic005" target="_blank"><u>ぺんと</u></a></h4>
+                    <h4><a href="https://x.com/kannagi_tenri" target="_blank"><u>巫てんり</u></a></h4>
+                </div>
+            </div>
+            <div class="producer">
+                <div class="heading">
+                    <ruby>プロデューサー</ruby>
+                    <h3>PRODUCER</h3>
+                </div>
+                <h4 class="producer-name">KEISUKE</h4>
+            </div>
+            <div class="director">
+                <div class="heading">
+                    <ruby>ディレクター</ruby>
+                    <h3>DIRECTOR</h3>
+                </div>
+                <h4 class="director-name">Kaede</h4>
+            </div>
+            <div class="staff">
+                <div class="heading" style="margin-bottom: 3%;">
+                    <ruby>スタッフ</ruby>
+                    <h3>STAFF</h3>
+                </div>
+                <div class="live-world">
+                    <div class="heading">
+                        <ruby>ライブワールド</ruby>
+                        <h4>LIVE WORLD</h4>
+                    </div>
+                        <div class="planner end section">
+                            <h4>企画構成・仕様設計</h4>
+                                <h4>ほこほこ</h4>
+                        </div>
+                        <div class="world-manager end section">
+                            <h4>ワールド統括</h4>
+                            <h4>murasaki</h4>
+                        </div>
+                        <div class="world-creator section">
+                            <h4><b>ワールド製作</b></h4>
+                            <div class="entrance end s-sec">
+                                <h4>エントランス</h4>
+                                    <h4><a href="https://x.com/Akik4n0106" target="_blank"><u>Akik4n</u></a></h4>
+                            </div>
+                            <div class="field-world end s-sec">
+                                <h4>野外ワールド</h4>
+                                    <h4><a href="https://lit.link/ryota1211" target="_blank"><u>Ryo-ta</u></a></h4>
+                            </div>
+                            <div class="live-house end s-sec">
+                                <h4>ライブハウス</h4>
+                                    <h4>murasaki</h4>
+                            </div>
+                            <div class="particle-world s-sec">
+                                <h4>パーティクルワールド</h4>
+                                    <div class="pl end">
+                                        <h4>「God knows...」</h4>
+                                        <div class="group">
+                                            <h4><a href="https://x.com/ko_fortuneko" target="_blank"><u>Ko</u></a></h4>
+                                            <h4><a href="https://x.com/sakurayu_tech" target="_blank"><u>さくらゆ</u></a></h4>       
+                                        </div>
+                                    </div>
+                                    <div class="pl end">
+                                        <h4>「シュガーソングとビターステップ」</h4>
+                                        <h4>かぜとかぜ</h4>
+                                    </div>
+                                    <div class="end">
+                                        <h4>「妄想感傷代償連盟」</h4>
+                                        <h4><a href="https://x.com/Akik4n0106" target="_blank"><u>Akik4n</u></a></h4>
+                                    </div>
+                                    <div class="end">
+                                        <h4>「ロキ」</h4>
+                                        <h4><a href="https://x.com/Akik4n0106" target="_blank"><u>Akik4n</u></a></h4>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="3d-object end section" style="gap:0;">
+                            <h4>3Dオブジェクト</h4>
+                            <div class="group" style="margin-left:10%">
+                                <h4>かねる</h4>
+                                <h4>Natako85</h4>
+                                <h4><a href="https://x.com/fiiel_0224" target="_blank"><u>フィーエル</u></a></h4>
+                            </div>
+                            <h4></h4>
+                        </div>
+                        <div class="world-poster section">
+                            <h4><b>ワールド内掲示物</b></h4>
+                                <div class="poster end">
+                                    <h4>ポスター</h4>
+                                    <div class="group">
+                                        <h4>ほこほこ</h4>
+                                        <h4><a href="https://x.com/yt_165" target="_blank"><u>165cm</u></a></h4>
+                                        <h4><a href="https://x.com/Halokuro_" target="_blank"><u>ハロクロ</u></a></h4>
+                                        <h4><a href="https://x.com/kaedetorisnoart" target="_blank"><u>並樹楓</u></a></h4>
+                                        <h4><a href="https://x.com/io4ua" target="_blank"><u>いおあ</u></a></h4>
+                                        <h4><a href="https://x.com/MIZUNOREIMU" target="_blank"><u>水ノ霊夢</u></a></h4>
+                                    </div>
+                                </div>
+                                <div class="stecker end">
+                                    <h4>ステッカー</h4>
+                                        <h4><a href="https://x.com/Halokuro_" target="_blank"><u>ハロクロ</u></a></h4>
+                                </div>
+                                <div class="entrance-image end">
+                                    <h4>エントランスイメージ図</h4>
+                                    <h4><a href="https://x.com/Halokuro_" target="_blank"><u>ハロクロ</u></a></h4>
+                                </div>
+                        </div>
+                </div>
+                <div class="logo-production">
+                    <div class="heading">
+                        <ruby>ロゴ制作</ruby>
+                        <h4>LOGO PRODUCTION</h4>
+                    </div>
+                    <h4><a href="https://x.com/Halokuro_" target="_blank"><u>ハロクロ</u></a></h4>
+                </div>
+                <div class="goods">
+                    <div class="heading">
+                        <ruby>グッズ</ruby>
+                        <h4>GOODS</h4>
+                    </div>
+                    <div class="production end">
+                        <h4>製作</h4>
+                        <div class="group">
+                            <h4>かぜとかぜ</h4>
+                            <h4><a href="https://x.com/cococo38683529" target="_blank"><u>Kawahagi</u></a></h4>
+                            <h4><a href="https://x.com/fiiel_0224" target="_blank"><u>フィーエル</u></a></h4>
+                        </div>
+                    </div>
+                    <div class="edit end">
+                        <h4>編集</h4>
+                            <h4><a href="https://x.com/000oKEIo000" target="_blank"><u>ｹｲ</u></a></h4>
+                    </div>
+                </div>
+                <div class="public-relations">
+                    <div class="heading">
+                        <ruby>広報</ruby>
+                        <h4>PUBLIC RELATIONS</h4>
+                    </div>
+                    <div class="sns-operation section">
+                        <h4><b>SNS</b></h4>
+                            <div class="end">
+                                <h4>SNS運営</h4>
+                                <h4>milk</h4>
+                            </div>
+                            <div class="end">
+                                <h4>監修</h4>
+                                <h4><a href="https://x.com/kyosk32" target="_blank"><u>きょきょ</u></a></h4>
+                            </div>
+                    </div>
+                    <div class="web-site section">
+                        <h4><b>Webサイト</b></h4>
+                        <div class="end">
+                            <h4>製作・運営</h4>
+                            <h4><a href="https://tsubame-rustica.com/" target="_blank"><u>つばめ</u></a></h4>
+                        </div>
+                        <div class="end">
+                            <h4>監修</h4>
+                            <div class="group">
+                                <h4><a href="https://x.com/Keisuke_TBR" target="_blank"><u>KEISUKE</u></a></h4>
+                                <h4><a href="https://x.com/kyosk32" target="_blank"><u>きょきょ</u></a></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie section">
+                        <h4><b>動画</b></h4>
+                        <div class="end">
+                            <h4>制作</h4>
+                            <h4>とうや</h4>
+                        </div>
+                        <div class="end">
+                            <h4>ナレーション</h4>
+                            <h4><a href="https://x.com/suzuha___0625" target="_blank"><u>suzuha.</u></a></h4>
+                        </div>
+                    </div>
+                    <div class="poster section">
+                        <h4><b>ポスター</b></h4>
+                        <div class="end">
+                            <h4>制作</h4>
+                            <div class="group">
+                                <h4><a href="https://x.com/Keisuke_TBR" target="_blank"><u>KEISUKE</u></a></h4>
+                                <h4>milk</h4>
+                                <h4><a href="https://x.com/io4ua" target="_blank"><u>いおあ</u></a></h4>
+                            </div>
+                        </div>
+                        <div class="end">
+                            <h4>監修</h4>
+                            <div class="group">
+                                <h4><a href="https://x.com/Keisuke_TBR" target="_blank"><u>KEISUKE</u></a></h4>
+                                <h4><a href="https://x.com/kyosk32" target="_blank"><u>きょきょ</u></a></h4>
+                                <h4><a href="https://x.com/000oKEIo000" target="_blank"><u>ｹｲ</u></a></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="irust end section">
+                        <h4>イラスト</h4>
+                        <h4><a href="https://x.com/000oKEIo000" target="_blank"><u>ｹｲ</u></a></h4>
+                    </div>
+                </div>
+                <div class="sound-lighting">
+                    <div class="heading">
+                        <ruby>音響・照明</ruby>
+                        <h4>Sound & Lighting</h4>
+                    </div>
+                    <div class="bgm section">
+                        <h4><b>BGM製作</b></h4>
+                            <div class="end">
+                                <h4>アフタートーク</h4>
+                                <h4><a href="https://x.com/Keisuke_TBR" target="_blank"><u>KEISUKE</u></a></h4>
+                            </div>
+                            <div class="end">
+                                <h4>エントランス</h4>
+                                <h4><a href="https://x.com/KontoLuaApple" target="_blank"><u>紺留留亜（Konto Lua）</u></a></h4>
+                            </div>
+                            <div class="end">
+                                <h4>ポータル2付近</h4>
+                                <h4><a href="https://x.com/hachimaru8800" target="_blank"><u>はちまる</u></a></h4>
+                            </div>
+                    </div>
+                    <div class="direction-plan end section">
+                        <h4>演出案</h4>
+                        <div class="group">
+                            <h4><a href="https://x.com/KontoLuaApple" target="_blank"><u>紺留留亜（Konto Lua）</u></a></h4>
+                            <h4>夜明</h4>  
+                        </div>                    
+                    </div>
+                    <div class="mix section">
+                        <h4><b>音声調整</b></h4>
+                            <div class="end">
+                                <h4>音源・BGM音量調整</h4>
+                                <h4>とうや</h4>
+                            </div>
+                            <div class="end">
+                                <h4>音源MIX（巫てんり）</h4>
+                                <h4>とうや</h4>
+                            </div>
+                    </div>
+                </div>
+                <div class="distribution">
+                    <div class="heading">
+                        <ruby>配信</ruby>
+                        <h4>DISTRIBUSION</h4>
+                    </div>
+                    <div class="director end">
+                        <h4>配信統括</h4>
+                            <h4>とうや</h4>
+                    </div>
+                    <div class="camera end">
+                        <h4>カメラ</h4>
+                        <div class="group">
+                            <h4>とうや</h4>
+                            <h4><a href="https://x.com/suzuha___0625" target="_blank"><u>suzuha.</u></a></h4>
+                            <h4><a href="https://tsubame-rustica.com/" target="_blank"><u>つばめ</u></a></h4>
+                            <h4><a href="https://x.com/shougayaki_fire" target="_blank"><u>しょうが焼き</u></a></h4>
+                        </div>
+                    </div>
+                    <div class="voice end">
+                        <h4>音声</h4>
+                            <h4><a href="https://x.com/MIZUNOREIMU" target="_blank"><u>水ノ霊夢</u></a></h4>
+                    </div>
+                    <div class="telop end">
+                        <h4>テロップ</h4>
+                            <h4>とうや</h4>
+                    </div>
+                    <div class="thumbnail end">
+                        <h4>動画サムネイル</h4>
+                            <h4><a href="https://x.com/Halokuro_" target="_blank"><u>ハロクロ</u></a></h4>
+                    </div>
+                    <div class="digest end">
+                        <h4>ダイジェスト</h4>
+                            <h4>とうや</h4>
+                    </div>
+                </div>
+                <div class="direction">
+                    <div class="heading">
+                        <ruby>演出</ruby>
+                        <h4>DIRECTION</h4>
+                    </div>
+                        <h4><a href="https://x.com/KontoLuaApple" target="_blank"><u>紺留留亜（Konto Lua）</u></a></h4>
+                        <h4>夜明</h4>
+                        <h4><a href="https://lit.link/ryota1211" target="_blank"><u>Ryo-ta</u></a></h4>
+                </div>
+                <div class="user-support">
+                    <div class="heading">
+                        <ruby>ユーザーサポート</ruby>
+                        <h4>USER SUPPORT</h4>
+                    </div>
+                    <div class="flex-group">
+                        <h4>ほこほこ</h4>
+                        <h4><a href="https://x.com/ko_fortuneko" target="_blank"><u>Ko</u></a></h4>
+                        <h4><a href="https://x.com/io4ua" target="_blank"><u>いおあ</u></a></h4>
+                        <h4><a href="https://x.com/Akik4n0106" target="_blank"><u>Akik4n</u></a></h4>
+                    </div>
+                </div>
+                <div class="cast-support">
+                    <div class="heading">
+                        <ruby>出演者サポート</ruby>
+                        <h4>ARTIST SUPPORT</h4>
+                    </div>
+                        <h4><a href="https://x.com/Keisuke_TBR" target="_blank"><u>KEISUKE</u></a></h4>
+                        <h4><a href="https://x.com/kyosk32" target="_blank"><u>きょきょ</u></a></h4>
+                </div>
+                <div class="time-keeper">
+                    <div class="heading">
+                        <ruby>タイムキーパー</ruby>
+                        <h4>TIME KEEPER</h4>
+                    </div>
+                        <h4>Kaede</h4>
+                </div>
+            </div>
+            <div class="operation">
+                <div class="heading">
+                    <ruby>運営</ruby>
+                    <h4>OPERATION</h4>
+                </div>
+                <h4>トビラポリスイベント企画部</h4>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

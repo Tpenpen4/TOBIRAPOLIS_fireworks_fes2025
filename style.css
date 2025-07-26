@@ -23,8 +23,14 @@ img{
 a {
     color: #4c9ac0;
 }
-p {
+p, ul li, ol li {
     font-size: larger;
+}
+@media (max-width: 768px) {
+    p ,ul li, ol li and .precautions-modal {
+      font-size: medium;
+    }
+  
 }
 @keyframes neonOn {
   
@@ -283,7 +289,7 @@ main {
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 20px;
+    gap: 30px;
     padding: 0 20px;
 }
 .card {
@@ -575,12 +581,12 @@ p.copy-right {
 }
 .btn_01 {
     flex: 1;
+    
 }
 .wrap .btnWrap .btn_01 a {
   margin-top: 0;
 }
 .btn_01 a {
-  background: #eec78e;
   border-radius: 30px;
   color: #fff;
   width: 100%;
