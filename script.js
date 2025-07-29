@@ -6,7 +6,7 @@ function showRestTime() {
   const goal = new Date('2025-08-17T19:30:00'); // イベント開催日時
   const end = new Date('2025-08-17T22:00:00'); // イベント終了日時
   const startDate = new Date('2025-08-01T15:00:00'); // プログレスバーの開始日時
-  const preOpenStartDate = new Date('2025-08-13T00:00:00'); // プレオープン開始日時
+  const preOpenStartDate = new Date('2025-08-10T00:00:00'); // プレオープン開始日時
   const preOpenEndDate = new Date('2025-08-16T23:59:00'); // プレオープン終了日時
   const buttonVisibilityStartDate = new Date('2025-08-17T19:00:00'); // ワールドボタン表示開始日時
   const artistCardChangeDate = new Date('2025-08-08T23:59:00'); // アーティスト様カード変更日時
@@ -37,9 +37,25 @@ function showRestTime() {
   const btnHanabi = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === '花火ワールド');
   const btnCredit = Array.from(buttons).find(btn => btn.querySelector('b')?.textContent === 'クレジット');
 
-  const artistCard = document.querySelector('.card[data-content-url="pages/soon.html"] img[alt=""]')?.closest('.card');
+  const artistCard = document.querySelector('.card[data-content-url="pages/artists_soon.html"] img[alt=""]')?.closest('.card');
 
   const isPreOpenTime = now >= preOpenStartDate && now <= preOpenEndDate;
+
+  if (isPreOpenTime) {
+    const day = now.getDate();
+    const urls = {
+      13: "https://cluster.mu/w/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      14: "https://cluster.mu/w/yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+      15: "https://cluster.mu/w/zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+      16: "https://cluster.mu/w/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    };
+    if (btnPreOpen) {
+      const link = btnPreOpen.querySelector('a');
+      if (link) {
+        link.href = urls[day] || "test";
+      }
+    }
+  }
   const isButtonVisibleTime = now >= buttonVisibilityStartDate && now < end;
   const isAfterEvent = now >= end;
 
@@ -63,7 +79,7 @@ function showRestTime() {
     if (now >= artistCardChangeDate) {
       artistCard.dataset.contentUrl = 'pages/artists.html';
     } else {
-      artistCard.dataset.contentUrl = 'pages/soon.html';
+      artistCard.dataset.contentUrl = 'pages/artists_soon.html';
     }
   }
 
@@ -179,11 +195,6 @@ function setupAccordion() {
                 if (cardImage) {
                     const originalSrc = cardImage.src;
                     cardImage.dataset.originalSrc = originalSrc;
-
-                    card.addEventListener('mouseenter', () => {
-                        cardImage.src = 'img/logo/clusterlogo_1line_trans_color.svg';
-                    });
-
                     card.addEventListener('mouseleave', () => {
                         cardImage.src = cardImage.dataset.originalSrc;
                     });
@@ -207,12 +218,7 @@ function setupAccordion() {
             this.classList.add('is-touched');
             this.isProductCardAndLight = isProductCardAndLight;
 
-            if (isProductCardAndLight) {
-                const cardImage = this.querySelector('img');
-                if (cardImage) {
-                    cardImage.src = 'img/logo/clusterlogo_1line_trans_color.svg';
-                }
-            }
+
             touchedCard = this;
         });
     });
@@ -284,7 +290,7 @@ function setupAccordion() {
           })
           .catch(error => {
             console.error('んにょ', error);
-            modalBody.innerHTML = '<h1>んにょ</h1>';
+            modalBody.innerHTML = '<h1>エラーです。メニューを開き直してください。</h1>';
             modalOverlay.style.display = 'flex';
             requestAnimationFrame(() => {
               modalBody.scrollTop = 0;
@@ -366,8 +372,6 @@ function setupAccordion() {
 
         observer.observe(mainTopSection);
     }
-
-    
 
 const minimumDisplayTime = 1000;
 const loadingStartTime = Date.now();
